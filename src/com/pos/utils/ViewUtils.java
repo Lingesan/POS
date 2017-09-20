@@ -16,6 +16,10 @@ public class ViewUtils {
 	
 	public String resolveView(HttpServletRequest request)
 	{
+		if(isSessionActive(request))
+		{
+			
+		}
 		return null;
 	}
 }
