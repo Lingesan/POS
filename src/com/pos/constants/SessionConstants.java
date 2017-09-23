@@ -1,4 +1,4 @@
-package com.pos.utils;
+package com.pos.constants;
 
 public class SessionConstants {
 	

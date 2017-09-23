@@ -4,6 +4,8 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Component;
 
+import com.pos.constants.SessionConstants;
+
 @Component
 public class ViewUtils {
 	
