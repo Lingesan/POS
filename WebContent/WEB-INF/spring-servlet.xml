@@ -40,5 +40,8 @@
 	<bean id="objectMapper" class="org.codehaus.jackson.map.ObjectMapper">
 
 	</bean>
-	<context:component-scan base-package="com.pos.controller" />
+	<context:component-scan base-package="com.pos.controller.impl" />
+	<context:component-scan base-package="com.pos.service.impl" />
+	<context:component-scan base-package="com.pos.dao.impl" />
+	<context:component-scan base-package="com.pos.utils" />
 </beans>
