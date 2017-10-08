@@ -1,13 +1,19 @@
 package com.pos.dao;
 
-import com.pos.beans.UserBean;
+import java.util.List;
+
+import com.pos.hibernate.beans.User;
 
 public interface UserDao {
 
-	public boolean isValidUser(UserBean user);
+	public boolean isValidUser(User user);
 
-	public boolean addUser(UserBean user);
+	public boolean addUser(User user);
 
-	public UserBean getUserByName(String userName);
+	public User getUserByName(String userName);
+
+	List<User> getAllUsers();
+
+	boolean updateUser(User user);
 
 }

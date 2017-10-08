@@ -1,3 +1,6 @@
+/**
+ * 
+ */
 package com.pos.dao.impl;
 
 import java.util.List;
@@ -5,48 +8,32 @@ import java.util.List;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.pos.constants.QueryConstants;
-import com.pos.dao.UserDao;
+import com.pos.dao.InvoiceDao;
+import com.pos.hibernate.beans.Invoice;
 import com.pos.hibernate.beans.User;
 
+/**
+ * @author lingesan
+ *
+ */
 @Repository
-public class UserDaoImpl implements UserDao {
+public class InvoiceDaoImpl implements InvoiceDao {
 
 	@Autowired
 	private SessionFactory sessionFactory;
 
 	@Override
-	public boolean isValidUser(User user) {
-
-		User tempUser = getUserByName(user.getName());
-		if (tempUser == null)
-			return false;
-		return true;
-
-	}
-
-	@Override
 	@Transactional
-	public boolean addUser(User user){
+	public boolean addInvoice(Invoice invoice) {
 		Session session = sessionFactory.getCurrentSession();
 		try {
-			session.save(user);
-			session.flush();
-		} catch (Exception exception) {
-			return false;
-		}
-		return true;
-	}
-	@Override
-	@Transactional
-	public boolean updateUser(User user) {
-		Session session = sessionFactory.getCurrentSession();
-		try {
-			session.update(user);
+			session.save(invoice);
 			session.flush();
 		} catch (Exception exception) {
 			return false;
@@ -54,28 +41,39 @@ public class UserDaoImpl implements UserDao {
 		return true;
 	}
 
+	@Override
+	@Transactional
+	public boolean updateInvoice(Invoice invoice) {
+		Session session = sessionFactory.getCurrentSession();
+		try {
+			session.update(invoice);
+			session.flush();
+		} catch (Exception exception) {
+			return false;
+		}
+		return true;
+	}
 	@Override
 	@Transactional(readOnly=true)
-	public User getUserByName(String userName) {
+	public User getInvoicebyBillNo(int billNo) {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery(QueryConstants.QUERY_GET_USER_BY_NAME);
-		query.setParameter(QueryConstants.USER_NAME, userName);
+		Query query = session.createQuery(QueryConstants.QUERY_GET_INVOICE_BY_ID);
+		query.setParameter(QueryConstants.INVOICE_ID, billNo);
 		@SuppressWarnings("unchecked")
 		List<User> list = query.list();
 		if (list == null)
 			return null;
-		if(list.isEmpty())
-			return null;
 		return list.get(0);
 	}
-	
+
 	@Override
 	@Transactional(readOnly=true)
-	public List<User> getAllUsers() {
+	public List<Invoice> getAllInvoices() {
 		Session session = sessionFactory.getCurrentSession();
-		Query query = session.createQuery(QueryConstants.QUERY_GET_ALL_USERS);
+		Query query = session.createQuery(QueryConstants.QUERY_GET_ALL_INVOICES);
 		@SuppressWarnings("unchecked")
-		List<User> list = query.list();
+		List<Invoice> list = query.list();
 		return list;
 	}
+
 }

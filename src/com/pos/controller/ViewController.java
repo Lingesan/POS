@@ -6,4 +6,6 @@ public interface ViewController {
 
 	public String homePage(HttpServletRequest request);
 
+	public String registerUser(HttpServletRequest request);
+
 }

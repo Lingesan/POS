@@ -26,5 +26,17 @@ public class ViewControllerImpl implements ViewController{
 			return ViewConstants.LOGIN_PAGE;
 		
 	}
+	
+	@Override
+	@RequestMapping("register.do")
+	public String registerUser(HttpServletRequest request)
+	{
+		if(viewUtils.isSessionActive(request))
+			return viewUtils.resolveView(request);
+		else
+			return ViewConstants.REGISTER_PAGE;
+		
+	}
+	
 
 }

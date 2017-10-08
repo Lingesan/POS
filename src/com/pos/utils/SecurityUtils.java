@@ -3,6 +3,9 @@ package com.pos.utils;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class SecurityUtils {
 	
 	private static final String passwordSalt="POS";
@@ -17,8 +20,8 @@ public class SecurityUtils {
 			for(int i=0;i<hashedBytes.length;i++)
 			{
 				byte b = hashedBytes[i];
-				hash.append(digits[b & 0xf0]>>4);
-				hash.append(b & 0x0f);
+				hash.append(digits[(b&0xf0)>>4]);
+				hash.append(digits[b & 0x0f]);
 				
 			}
 		} catch (NoSuchAlgorithmException e) {
