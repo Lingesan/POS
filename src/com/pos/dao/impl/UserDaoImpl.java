@@ -60,13 +60,12 @@ public class UserDaoImpl implements UserDao {
 		Session session = sessionFactory.getCurrentSession();
 		Query query = session.createQuery(QueryConstants.QUERY_GET_USER_BY_NAME);
 		query.setParameter(QueryConstants.USER_NAME, userName);
-		@SuppressWarnings("unchecked")
-		List<User> list = query.list();
+		List<?> list = query.list();
 		if (list == null)
 			return null;
 		if(list.isEmpty())
 			return null;
-		return list.get(0);
+		return (User)list.get(0);
 	}
 	
 	@Override

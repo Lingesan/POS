@@ -2,9 +2,11 @@ package com.pos.controller;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.web.servlet.ModelAndView;
+import com.pos.beans.Message;
+import com.pos.hibernate.beans.User;
 
 public interface SecurityController {
 
-	public ModelAndView checkCredentials(HttpServletRequest request);
+	public Message checkCredentials(User user,HttpServletRequest request);
+	public boolean createSessionForUser(User user,HttpServletRequest request);
 }

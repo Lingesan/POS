@@ -22,6 +22,17 @@ public class UserControllerImpl implements UserController {
 	@RequestMapping(value = "/addUser.do", method = RequestMethod.POST)
 	@ResponseBody
 	public Message addUser(@ModelAttribute("user") User user) {
+		Message message = new Message();
+		if (user == null || user.getName() == null || user.getName() == "") {
+			message.setStatus("Error");
+			message.setContent("Username cannot be empty");
+			return message;
+		}
+		if (user.getPswd() == null||user.getPswd()=="") {
+			message.setStatus("Error");
+			message.setContent("Password cannot be empty");
+			return message;
+		}
 		return userService.add(user);
 	}
 

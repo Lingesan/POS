@@ -42,14 +42,22 @@
 				function(on, dialog, ajax, ready) {
 					ready(function() {
 						on(submit, 'click', function() {
+							try
+							{
 							data = {
 								'name' : username.value,
 								'pswd' : password.value
 							};
 							ajax.post(submitUrl, data, function(response) {
-								message = dojo.fromjson(response);
-								dialog.showDialog(message.status,message.content);
+								//message = dojo.fromJson(response);
+								//console.log(message);
+								dialog.showDialog(response.status,response.content);
 							});
+						}
+						catch(exception)
+						{
+							dialog.showDialog('ERROR',exception.description);
+							}
 						});
 					});
 				})

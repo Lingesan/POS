@@ -8,7 +8,7 @@
 <script>
 	dojoConfig = {
 		parseOnLoad : true,
-		baseUrl : "${pageContext.request.contextPath}/js/dojoRoot/",
+		baseUrl : "${pageContext.request.contextPath}/js/dojoRoot",
 		packages : [ {
 			name : "dojo",
 			location : "dojo/"
@@ -35,18 +35,35 @@
 		<button data-dojo-type="dijit/form/Button" id="submit">Submit</button>
 	</form>
 	<script>
-	var submitUrl = "${pageContext.request.contextPath}/security/checkCredentials.do";
-		require([ "dojo/on", "pos/Dialog","pos/AjaxPost" ,"dojo/ready" ],
-				function(on, dialog,ajax,ready) {
-					ready(function(){
-						on(submit,'click',function(){
-							data = {
-									user:username.value,
-									password:password.value
-							};
-							ajax.post(submitUrl,data,function(){
-								dialog.showDialog("Hi");
-							});
+		var submitUrl = "${pageContext.request.contextPath}/security/checkCredentials.do";
+		redirectToPage = function(viewName)
+		{
+			window.location = '${pageContext.request.contextPath}/'+viewName+'.do';
+		}
+		require([ "dojo/on", "pos/Dialog", "pos/AjaxPost", "dojo/ready" ],
+				function(on, dialog, ajax, ready) {
+					ready(function() {
+						on(submit, 'click', function() {
+							try {
+								data = {
+									'name' : username.value,
+									'pswd' : password.value
+								};
+								ajax.post(submitUrl, data, function(response) {
+									//message = dojo.fromJson(response);
+									//console.log(message);
+									if (response.status == 'REDIRECT') {
+										redirectToPage(response.content);
+									}
+									else
+										{
+										dialog.showDialog("ERROR","System Error occured");
+										}
+								});
+							} catch (exception) {
+								dialog.showDialog('ERROR',
+										exception.description);
+							}
 						});
 					});
 				})

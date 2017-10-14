@@ -25,15 +25,14 @@ public class UserServiceImpl implements UserService {
 		if (userDao.getUserByName(user.getName()) != null) {
 			message.setStatus("Error");
 			message.setContent("User " + user.getName() + " already exist");
+			return message;
 		} else {
 			String password = securityUtils.generateHash(user.getPswd());
 			user.setPswd(password);
 			if (userDao.addUser(user)) {
 				message.setStatus("Success");
 				message.setContent("User " + user.getName() + " added successfully");
-			}
-			else
-			{
+			} else {
 				message.setStatus("ERROR");
 				message.setContent("Something Went Wrong.Please contact Lingesan");
 			}
